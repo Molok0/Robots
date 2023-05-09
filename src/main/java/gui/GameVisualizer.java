@@ -15,12 +15,7 @@ import java.util.TimerTask;
 import javax.swing.*;
 
 public class GameVisualizer extends JPanel implements Observer {
-    private volatile double m_robotPositionX = 100;
-    private volatile double m_robotPositionY = 100;
-    private volatile double m_robotDirection = 0;
 
-    private volatile int m_targetPositionX = 150;
-    private volatile int m_targetPositionY = 100;
     private final Timer m_timer = initTimer();
     private DataModel m_model;
 
@@ -59,8 +54,8 @@ public class GameVisualizer extends JPanel implements Observer {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        drawRobot(g2d, round(m_robotPositionX), round(m_robotPositionY), m_robotDirection);
-        drawTarget(g2d, m_targetPositionX, m_targetPositionY);
+        drawRobot(g2d, round(m_model.getRobotPositionX()), round(m_model.getRobotPositionY()), m_model.getRobotDirection());
+        drawTarget(g2d,m_model.getTargetPositionX(), m_model.getTargetPositionY());
     }
 
     @Override
@@ -109,12 +104,6 @@ public class GameVisualizer extends JPanel implements Observer {
     }
 
     private void onTargetChange() {
-        m_robotPositionX = m_model.getRobotPositionX();
-        m_robotPositionY = m_model.getRobotPositionY();
-        m_robotDirection = m_model.getRobotDirection();
-
-        m_targetPositionX = m_model.getTargetPositionX();
-        m_targetPositionY = m_model.getTargetPositionY();
         repaint();
     }
 }

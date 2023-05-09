@@ -8,8 +8,6 @@ import java.util.Observer;
 public class CoordinatesWindow extends JInternalFrame implements Observer {
     private DataModel m_model;
     private JTextArea coordinate;
-    private volatile double m_robotPositionX = 100;
-    private volatile double m_robotPositionY = 100;
     public CoordinatesWindow(DataModel model)
     {
         super("Координаты робота", true, true, true, true);
@@ -22,7 +20,7 @@ public class CoordinatesWindow extends JInternalFrame implements Observer {
         panel.add(coordinate, BorderLayout.CENTER);
         getContentPane().add(panel);
         pack();
-//        coordinate.setText(String.valueOf(m_robotPositionY) +"\n" + String.valueOf(m_robotPositionX));
+        coordinate.setText(String.valueOf(1) +"\n" + String.valueOf(1));
         setDoubleBuffered(true);
     }
 
@@ -33,9 +31,7 @@ public class CoordinatesWindow extends JInternalFrame implements Observer {
     }
 
     private void onCoordinatesChange(){
-        double m_robotPositionX = m_model.getRobotPositionX();
-        double m_robotPositionY = m_model.getRobotPositionY();
-        coordinate.setText(String.valueOf(m_robotPositionY) +"\n" + String.valueOf(m_robotPositionX));
+        coordinate.setText(String.valueOf(m_model.getRobotPositionX()) +"\n" + String.valueOf(m_model.getRobotPositionY()));
         repaint();
     }
 }

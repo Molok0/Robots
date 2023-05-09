@@ -109,7 +109,7 @@ public class DataModel extends Observable {
         m_robotPositionY = newY;
         double newDirection = asNormalizedRadians(m_robotDirection + angularVelocity * duration);
         m_robotDirection = newDirection;
-        setChanged();
+
         notifyObservers();
         clearChanged();
     }
