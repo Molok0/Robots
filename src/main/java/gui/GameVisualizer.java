@@ -55,7 +55,7 @@ public class GameVisualizer extends JPanel implements Observer {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         drawRobot(g2d, round(m_model.getRobotPositionX()), round(m_model.getRobotPositionY()), m_model.getRobotDirection());
-        drawTarget(g2d,m_model.getTargetPositionX(), m_model.getTargetPositionY());
+        drawTarget(g2d, m_model.getTargetPositionX(), m_model.getTargetPositionY());
     }
 
     @Override
