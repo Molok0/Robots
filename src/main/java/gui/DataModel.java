@@ -72,11 +72,19 @@ public class DataModel extends Observable {
         double velocity = maxVelocity;
         double angleToTarget = angleTo(m_robotPositionX, m_robotPositionY, m_targetPositionX, m_targetPositionY);
         double angularVelocity = 0;
-        if (angleToTarget > m_robotDirection) {
-            angularVelocity = maxAngularVelocity;
-        }
-        if (angleToTarget < m_robotDirection) {
-            angularVelocity = -maxAngularVelocity;
+
+        if (Math.abs(m_robotDirection - angleToTarget) < 10e-7) {
+            angularVelocity = m_robotDirection;
+        } else if (m_robotDirection >= Math.PI) {
+            if (m_robotDirection - Math.PI < angleToTarget && angleToTarget < m_robotDirection)
+                angularVelocity = -maxAngularVelocity;
+            else
+                angularVelocity = maxAngularVelocity;
+        } else {
+            if (m_robotDirection < angleToTarget && angleToTarget < m_robotDirection + Math.PI)
+                angularVelocity = maxAngularVelocity;
+            else
+                angularVelocity = -maxAngularVelocity;
         }
 
         moveRobot(velocity, angularVelocity, 10);
@@ -93,22 +101,16 @@ public class DataModel extends Observable {
     private void moveRobot(double velocity, double angularVelocity, double duration) {
         velocity = applyLimits(velocity, 0, maxVelocity);
         angularVelocity = applyLimits(angularVelocity, -maxAngularVelocity, maxAngularVelocity);
-        double newX = m_robotPositionX + velocity / angularVelocity *
-                (Math.sin(m_robotDirection + angularVelocity * duration) -
-                        Math.sin(m_robotDirection));
-        if (!Double.isFinite(newX)) {
-            newX = m_robotPositionX + velocity * duration * Math.cos(m_robotDirection);
-        }
-        double newY = m_robotPositionY - velocity / angularVelocity *
-                (Math.cos(m_robotDirection + angularVelocity * duration) -
-                        Math.cos(m_robotDirection));
-        if (!Double.isFinite(newY)) {
-            newY = m_robotPositionY + velocity * duration * Math.sin(m_robotDirection);
-        }
-        m_robotPositionX = newX;
-        m_robotPositionY = newY;
         double newDirection = asNormalizedRadians(m_robotDirection + angularVelocity * duration);
+
+        double newX = m_robotPositionX + velocity * duration * Math.cos(newDirection);
+        double newY = m_robotPositionY + velocity * duration * Math.sin(newDirection);
+
+        m_robotPositionX = applyLimits(newX, 0, 400);
+        m_robotPositionY = applyLimits(newY, 0, 400);
+
         m_robotDirection = newDirection;
+
         setChanged();
         notifyObservers();
         clearChanged();

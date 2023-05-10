@@ -20,7 +20,7 @@ public class CoordinatesWindow extends JInternalFrame implements Observer {
         panel.add(coordinate, BorderLayout.CENTER);
         getContentPane().add(panel);
         pack();
-        coordinate.setText("X: "+ String.valueOf(1) + "\n" + "Y: " + String.valueOf(1));
+        coordinate.setText("X: "+ String.valueOf(m_model.getRobotPositionX()) + "\n" + "Y: " + String.valueOf(m_model.getRobotPositionY()));
         setDoubleBuffered(true);
     }
 
