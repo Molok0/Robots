@@ -26,8 +26,9 @@ public class CoordinatesWindow extends JInternalFrame implements Observer {
 
 
     @Override
-    public void update(Observable o, Object arg) {
-        onCoordinatesChange();
+    public void update(Observable o, Object key) {
+        if (DataModel.KEY_COORDINATES_ROBOT_CHANGED == key)
+            onCoordinatesChange();
     }
 
     private void onCoordinatesChange() {

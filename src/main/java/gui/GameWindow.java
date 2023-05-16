@@ -11,8 +11,7 @@ public class GameWindow extends JInternalFrame {
 
     public GameWindow(DataModel model) {
         super("Игровое поле", true, true, true, true);
-        m_model = model;
-        m_visualizer = new GameVisualizer(m_model);
+        m_visualizer = new GameVisualizer(model);
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_visualizer, BorderLayout.CENTER);
         getContentPane().add(panel);

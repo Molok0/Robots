@@ -44,7 +44,6 @@ public class GameVisualizer extends JPanel implements Observer {
             @Override
             public void mouseClicked(MouseEvent e) {
                 m_model.setTargetPosition(e.getPoint());
-                repaint();
             }
         });
         setDoubleBuffered(true);
@@ -54,13 +53,25 @@ public class GameVisualizer extends JPanel implements Observer {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        drawRobot(g2d, round(m_model.getRobotPositionX()), round(m_model.getRobotPositionY()), m_model.getRobotDirection());
+        drawRobot(g2d, m_model.getRobotDirection());
         drawTarget(g2d, m_model.getTargetPositionX(), m_model.getTargetPositionY());
     }
 
     @Override
-    public void update(java.util.Observable o, Object arg) {
-        onTargetChange();
+    public void update(java.util.Observable o, Object key) {
+        if (DataModel.KEY_COORDINATES_ROBOT_CHANGED == key) {
+            onRobotChanged();
+        } else if (DataModel.KEY_COORDINATES_TARGET_CHANGED == key) {
+            onTargetChange();
+        }
+    }
+
+    private void onRobotChanged() {
+        repaint();
+    }
+
+    private void onTargetChange() {
+        repaint();
     }
 
     protected void onRedrawEvent() {
@@ -79,7 +90,7 @@ public class GameVisualizer extends JPanel implements Observer {
         return (int) (value + 0.5);
     }
 
-    private void drawRobot(Graphics2D g, int x, int y, double direction) {
+    private void drawRobot(Graphics2D g, double direction) {
         int robotCenterX = round(m_model.getRobotPositionX());
         int robotCenterY = round(m_model.getRobotPositionY());
         AffineTransform t = AffineTransform.getRotateInstance(direction, robotCenterX, robotCenterY);
@@ -101,10 +112,6 @@ public class GameVisualizer extends JPanel implements Observer {
         fillOval(g, x, y, 5, 5);
         g.setColor(Color.BLACK);
         drawOval(g, x, y, 5, 5);
-    }
-
-    private void onTargetChange() {
-        repaint();
     }
 }
 
