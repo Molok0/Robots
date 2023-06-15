@@ -59,9 +59,9 @@ public class GameVisualizer extends JPanel implements Observer {
 
     @Override
     public void update(java.util.Observable o, Object key) {
-        if (DataModel.KEY_COORDINATES_ROBOT_CHANGED == key) {
+        if (DataModel.RobotCoordinatesChangedEvent == key) {
             onRobotChanged();
-        } else if (DataModel.KEY_COORDINATES_TARGET_CHANGED == key) {
+        } else if (DataModel.TargetCoordinatesChangedEvent == key) {
             onTargetChange();
         }
     }

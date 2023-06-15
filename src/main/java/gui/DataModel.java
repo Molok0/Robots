@@ -4,8 +4,8 @@ import java.awt.*;
 import java.util.Observable;
 
 public class DataModel extends Observable {
-    public static String KEY_COORDINATES_ROBOT_CHANGED = "coordinates robot changed";
-    public static String KEY_COORDINATES_TARGET_CHANGED = "coordinates target changed";
+    public static String RobotCoordinatesChangedEvent = "coordinates robot changed";
+    public static String TargetCoordinatesChangedEvent = "coordinates target changed";
     private volatile double m_robotPositionX = 100;
     private volatile double m_robotPositionY = 100;
     private volatile double m_robotDirection = 0;

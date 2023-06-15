@@ -20,19 +20,19 @@ public class CoordinatesWindow extends JInternalFrame implements Observer {
         panel.add(coordinate, BorderLayout.CENTER);
         getContentPane().add(panel);
         pack();
-        coordinate.setText("X: "+ String.valueOf(m_model.getRobotPositionX()) + "\n" + "Y: " + String.valueOf(m_model.getRobotPositionY()));
+        coordinate.setText("X: " + String.valueOf(m_model.getRobotPositionX()) + "\n" + "Y: " + String.valueOf(m_model.getRobotPositionY()));
         setDoubleBuffered(true);
     }
 
 
     @Override
     public void update(Observable o, Object key) {
-        if (DataModel.KEY_COORDINATES_ROBOT_CHANGED == key)
+        if (DataModel.RobotCoordinatesChangedEvent == key)
             onCoordinatesChange();
     }
 
     private void onCoordinatesChange() {
-        coordinate.setText("X: "+ String.valueOf(m_model.getRobotPositionX()) + "\n" + "Y: " + String.valueOf(m_model.getRobotPositionY()));
+        coordinate.setText("X: " + String.valueOf(m_model.getRobotPositionX()) + "\n" + "Y: " + String.valueOf(m_model.getRobotPositionY()));
     }
 
 }
