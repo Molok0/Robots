@@ -3,8 +3,13 @@ package gui;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.*;
+import java.util.Locale;
 import javax.swing.*;
 
+import localization.LanguageAdapter;
+import localization.LanguageModel;
+import localization.LanguageUpdate;
+import localization.Localization;
 import log.Logger;
 
 /**
@@ -12,9 +17,10 @@ import log.Logger;
  * 1. Метод создания меню перегружен функционалом и трудно читается.
  * Следует разделить его на серию более простых методов (или вообще выделить отдельный класс).
  */
-public class MainApplicationFrame extends JFrame {
+public class MainApplicationFrame extends JFrame implements LanguageUpdate {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private DataModel m_model;
+    private LanguageModel languageModel = LanguageModel.getInstance();
 
     public MainApplicationFrame() {
         //Make the big window be indented 50 pixels from each edge
@@ -39,6 +45,7 @@ public class MainApplicationFrame extends JFrame {
         gameWindow.setSize(400, 400);
         addWindow(gameWindow);
 
+        addPropertyChangeListener(new LanguageAdapter(this, languageModel));
 
         setJMenuBar(generateMenuBar());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -94,14 +101,37 @@ public class MainApplicationFrame extends JFrame {
         menuBar.add(generateLookAndFeelMenu());
         menuBar.add(generateTestMenu());
         menuBar.add(generateExitMenu());
+        menuBar.add(generateLangMenu());
         return menuBar;
     }
 
+    private JMenu generateLangMenu() {
+        JMenu locale = new JMenu(Localization.get("lang"));
+        locale.setMnemonic(KeyEvent.VK_T);
+        locale.getAccessibleContext().setAccessibleDescription(Localization.get("exit_from")
+        );
+
+        {
+            JMenuItem setLocaleEng = new JMenuItem(Localization.get("lang_en"), KeyEvent.VK_S);
+            setLocaleEng.addActionListener((event) -> {
+                languageModel.setLocalization(new Locale("UK"));
+            });
+            JMenuItem setLocaleRu = new JMenuItem(Localization.get("lang_ru"), KeyEvent.VK_S);
+            setLocaleEng.addActionListener((event) -> {
+                languageModel.setLocalization(new Locale("RU"));
+            });
+            locale.add(setLocaleEng);
+            locale.add(setLocaleRu);
+        }
+        return locale;
+    }
+
+
     private JMenu generateExitMenu() {
-        JMenu exitMenu = new JMenu("Выход");
+        JMenu exitMenu = new JMenu(Localization.get("exit"));
         exitMenu.setMnemonic(KeyEvent.VK_T);
         exitMenu.getAccessibleContext().setAccessibleDescription(
-                "Выход из программы");
+                Localization.get("exit_from"));
 
         {
             JMenuItem setExit = new JMenuItem("Выход", KeyEvent.VK_S);
@@ -170,5 +200,10 @@ public class MainApplicationFrame extends JFrame {
                  | IllegalAccessException | UnsupportedLookAndFeelException e) {
             // just ignore
         }
+    }
+
+    @Override
+    public void changeLanguage() {
+        this.setJMenuBar(generateMenuBar());
     }
 }
