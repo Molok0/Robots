@@ -46,7 +46,6 @@ public class MainApplicationFrame extends JFrame implements LanguageUpdate {
         addWindow(gameWindow);
 
         addPropertyChangeListener(new LanguageAdapter(this, languageModel));
-
         setJMenuBar(generateMenuBar());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -114,11 +113,11 @@ public class MainApplicationFrame extends JFrame implements LanguageUpdate {
         {
             JMenuItem setLocaleEng = new JMenuItem(Localization.get("lang_en"), KeyEvent.VK_S);
             setLocaleEng.addActionListener((event) -> {
-                languageModel.setLocalization(new Locale("UK"));
+                languageModel.setLocalization(new Locale("en_UK"));
             });
             JMenuItem setLocaleRu = new JMenuItem(Localization.get("lang_ru"), KeyEvent.VK_S);
             setLocaleEng.addActionListener((event) -> {
-                languageModel.setLocalization(new Locale("RU"));
+                languageModel.setLocalization(new Locale("ru_RU"));
             });
             locale.add(setLocaleEng);
             locale.add(setLocaleRu);

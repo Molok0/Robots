@@ -13,6 +13,7 @@ public class LanguageAdapter implements
         this.instance = instance;
         this.languageModel = dispatcher;
         dispatcher.addTextChangeListener(this);
+
     }
 
     @Override
