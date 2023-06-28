@@ -133,10 +133,10 @@ public class MainApplicationFrame extends JFrame implements LanguageUpdate {
                 Localization.get("exit_from"));
 
         {
-            JMenuItem setExit = new JMenuItem("Выход", KeyEvent.VK_S);
+            JMenuItem setExit = new JMenuItem(Localization.get("exit"), KeyEvent.VK_S);
             setExit.addActionListener((event) -> {
                 int dialogResult =
-                        JOptionPane.showConfirmDialog(null, "Вы уверены, что хотите закрыть окно?", "Подтверждение", JOptionPane.YES_NO_OPTION);
+                        JOptionPane.showConfirmDialog(null, Localization.get("question"), Localization.get("confirmation"), JOptionPane.YES_NO_OPTION);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
                 } else {
@@ -150,15 +150,15 @@ public class MainApplicationFrame extends JFrame implements LanguageUpdate {
     }
 
     private JMenu generateTestMenu() {
-        JMenu testMenu = new JMenu("Тесты");
+        JMenu testMenu = new JMenu(Localization.get("tests"));
         testMenu.setMnemonic(KeyEvent.VK_T);
         testMenu.getAccessibleContext().setAccessibleDescription(
                 "Тестовые команды");
 
         {
-            JMenuItem addLogMessageItem = new JMenuItem("Сообщение в лог", KeyEvent.VK_S);
+            JMenuItem addLogMessageItem = new JMenuItem(Localization.get("post"), KeyEvent.VK_S);
             addLogMessageItem.addActionListener((event) -> {
-                Logger.debug("Новая строка");
+                Logger.debug(Localization.get("debug"));
             });
             testMenu.add(addLogMessageItem);
         }
@@ -166,13 +166,13 @@ public class MainApplicationFrame extends JFrame implements LanguageUpdate {
     }
 
     private JMenu generateLookAndFeelMenu() {
-        JMenu lookAndFeelMenu = new JMenu("Режим отображения");
+        JMenu lookAndFeelMenu = new JMenu(Localization.get("display_mode"));
         lookAndFeelMenu.setMnemonic(KeyEvent.VK_V);
         lookAndFeelMenu.getAccessibleContext().setAccessibleDescription(
                 "Управление режимом отображения приложения");
 
         {
-            JMenuItem systemLookAndFeel = new JMenuItem("Системная схема", KeyEvent.VK_S);
+            JMenuItem systemLookAndFeel = new JMenuItem(Localization.get("system_diagram"), KeyEvent.VK_S);
             systemLookAndFeel.addActionListener((event) -> {
                 setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 this.invalidate();
@@ -181,7 +181,7 @@ public class MainApplicationFrame extends JFrame implements LanguageUpdate {
         }
 
         {
-            JMenuItem crossplatformLookAndFeel = new JMenuItem("Универсальная схема", KeyEvent.VK_S);
+            JMenuItem crossplatformLookAndFeel = new JMenuItem(Localization.get("universal_scheme"), KeyEvent.VK_S);
             crossplatformLookAndFeel.addActionListener((event) -> {
                 setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
                 this.invalidate();
