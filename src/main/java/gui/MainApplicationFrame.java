@@ -22,6 +22,8 @@ public class MainApplicationFrame extends JFrame implements LanguageUpdate {
     private DataModel m_model;
     private LanguageModel languageModel = LanguageModel.getInstance();
 
+    private LanguageAdapter languageAdapter;
+
     public MainApplicationFrame() {
         //Make the big window be indented 50 pixels from each edge
         //of the screen.
@@ -33,6 +35,7 @@ public class MainApplicationFrame extends JFrame implements LanguageUpdate {
 
         setContentPane(desktopPane);
 
+        languageAdapter = new LanguageAdapter(this, languageModel);
 
         LogWindow logWindow = createLogWindow();
         addWindow(logWindow);
@@ -45,7 +48,7 @@ public class MainApplicationFrame extends JFrame implements LanguageUpdate {
         gameWindow.setSize(400, 400);
         addWindow(gameWindow);
 
-        addPropertyChangeListener(new LanguageAdapter(this, languageModel));
+//        addPropertyChangeListener(new LanguageAdapter(this, languageModel));
         setJMenuBar(generateMenuBar());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -116,7 +119,7 @@ public class MainApplicationFrame extends JFrame implements LanguageUpdate {
                 languageModel.setLocalization(new Locale("en_UK"));
             });
             JMenuItem setLocaleRu = new JMenuItem(Localization.get("lang_ru"), KeyEvent.VK_S);
-            setLocaleEng.addActionListener((event) -> {
+            setLocaleRu.addActionListener((event) -> {
                 languageModel.setLocalization(new Locale("ru_RU"));
             });
             locale.add(setLocaleEng);

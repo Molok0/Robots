@@ -19,6 +19,7 @@ public class LogWindow extends JInternalFrame implements LogChangeListener, Lang
     private LogWindowSource m_logSource;
     private TextArea m_logContent;
     private LanguageModel languageModel = LanguageModel.getInstance();
+    private LanguageAdapter languageAdapter;
 
     public LogWindow(LogWindowSource logSource) {
         super(Localization.get("window_protocol"), true, true, true, true);
@@ -26,7 +27,8 @@ public class LogWindow extends JInternalFrame implements LogChangeListener, Lang
         m_logSource.registerListener(this);
         m_logContent = new TextArea("");
         m_logContent.setSize(200, 500);
-        addPropertyChangeListener(new LanguageAdapter(this, languageModel));
+//        addPropertyChangeListener(new LanguageAdapter(this, languageModel));
+        languageAdapter = new LanguageAdapter(this, languageModel);
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_logContent, BorderLayout.CENTER);
         getContentPane().add(panel);
